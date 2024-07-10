@@ -7,24 +7,15 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { useMessage } from "@/hooks/useMessage";
 
-  export default {
+export default {
     setup(){
-      const message = ref('hello');
+      const { message, changeMessage } = useMessage();
+
+      return { message, changeMessage}
 
     }
-    
-    // data() {
-    //   return {
-    //     message: 'hello'
-    //   }
-    // },
-    // methods: {
-    //   changeMessage() {
-    //     this.message = 'hi'
-    //   }
-    // }
   }
 </script>
 
