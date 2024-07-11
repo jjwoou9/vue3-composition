@@ -13,17 +13,14 @@
 </template>
 
 <script>
-import { ref } from 'vue';
 export default {
   props: ['todoItems'],
   setup(props, context) {
-    const items = ref([]);
-
       function removeTodo(todoItem, index){
         context.emit('remove', todoItem, index)
       }
 
-    return { items, removeTodo };
+    return { removeTodo };
   },
   methods: {
     toggleComplete: function(todoItem, index) {

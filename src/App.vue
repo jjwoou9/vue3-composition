@@ -1,7 +1,8 @@
 <template>
-  <TodoHeader></TodoHeader>
+  <TodoHeader :appTitle="title"></TodoHeader>
   <TodoInput @add="addTodoItem"></TodoInput>
   <TodoList :todoItems="todoItems" @remove="removeTodoItem"></TodoList>
+  <TodoFooter></TodoFooter>
 </template>
 
 <script>
@@ -18,6 +19,11 @@ import TodoFooter from './components/TodoFooter.vue'
       TodoList,
       TodoFooter
     },
+    data(){
+      return {
+        title: '할일 앱'
+      }
+    },
     setup() {
       //data
       const todoItems = ref([]);
@@ -25,7 +31,7 @@ import TodoFooter from './components/TodoFooter.vue'
       //methodss
       function fecthTodos() {
         const result = [];
-        for (let i = 0; i < localStorage.length; i++){\
+        for (let i = 0; i < localStorage.length; i++){
           const todoItem = localStorage.key(i);
           result.push(todoItem);
         }
@@ -34,17 +40,16 @@ import TodoFooter from './components/TodoFooter.vue'
       todoItems.value == fecthTodos;
 
       function addTodoItem(todo){
-          todoItems.value.push(todo);
-          localStorage.setItem(todo, todo);
+        todoItems.value.push(todo);
+        localStorage.setItem(todo, todo);
       }
 
       function removeTodoItem(item, index){
-        todoItems.splice(index, 1);
+        todoItems.value.splice(index, 1);
         localStorage.removeItem(item,item);
       }
 
-      function removeTodoItem(item, index){
-        return { todoItems, addTodoItem, }
+      return { todoItems, addTodoItem, removeTodoItem }
     }   
   } 
 </script>
