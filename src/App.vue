@@ -6,11 +6,12 @@
 </template>
 
 <script>
-import { onBeforeMount, onMounted, ref } from 'vue';
 import TodoHeader from '@/components/TodoHeader.vue';
 import TodoInput from './components/TodoInput.vue'
 import TodoList from './components/TodoList.vue'
 import TodoFooter from './components/TodoFooter.vue'
+import { useTodo } from './hooks/useTodo.js'
+import { onMounted, onBeforeMount } from 'vue';
 
   export default {
     components: {
@@ -25,41 +26,21 @@ import TodoFooter from './components/TodoFooter.vue'
       }
     },
     setup() {
-      //data
-      const todoItems = ref([]);
+      const { todoItems, addTodoItem, fecthTodos, removeTodoItem }
+      = useTodo();
 
-      //methodss
-      function fecthTodos() {
-        const result = [];
-        for (let i = 0; i < localStorage.length; i++){
-          const todoItem = localStorage.key(i);
-          result.push(todoItem);
-        }
-        return result;
-      }
-      
-      console.log('setup called');
       //화면에 불려지기 전 =라이프 사이클 API 적용된 구간
-      onBeforeMount(() => {        
+      onBeforeMount (() => {        
         console.log('onBeforeMount called');
-        todoItems.value == fecthTodos;
+        todoItems.value = fecthTodos();
       })
 
       onMounted(() => {
         console.log('onMounted called');
       })
 
-      function addTodoItem(todo){
-        todoItems.value.push(todo);
-        localStorage.setItem(todo, todo);
-      }
 
-      function removeTodoItem(item, index){
-        todoItems.value.splice(index, 1);
-        localStorage.removeItem(item,item);
-      }
-
-      return { todoItems, addTodoItem, removeTodoItem }
+      return { todoItems, addTodoItem, onBeforeMount, onMounted, removeTodoItem }
     }   
   } 
 </script>
