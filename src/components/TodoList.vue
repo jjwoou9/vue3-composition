@@ -13,12 +13,19 @@
 </template>
 
 <script>
+import { watch } from 'vue';
+
 export default {
   props: ['todoItems'],
   setup(props, context) {
       function removeTodo(todoItem, index){
         context.emit('remove', todoItem, index)
       }
+
+      watch(props.todoItems, (newValue) => {
+        console.log(newValue);
+        //watch는 지양
+      })
 
     return { removeTodo };
   },
