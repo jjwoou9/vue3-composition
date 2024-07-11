@@ -13,8 +13,14 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 export default {
-  props: ['propsdata'],
+  props: ['todoItems'],
+  setup() {
+    const items = ref([]);
+
+    return { items };
+  },
   methods: {
     removeTodo: function(todoItem, index) {
       this.$emit('removeItem', todoItem, index);

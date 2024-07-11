@@ -19,17 +19,14 @@
 </template>
 
 <script>
-import Modal from './common/Modal.vue'
+import { ref } from 'vue';
+import Modal from  './common/Modal.vue' 
 
 export default {
-  data: function() {
-    return {
-      newTodoItem: '',
-      showModal: false
-    }
-  },
-  methods: {
-    addTodo: function() {
+  setup() {
+    const todoInput = ref('');
+
+    function addTodo(){
       if (this.newTodoItem !== '') {
         var item = this.newTodoItem.trim();
         this.$emit('addItem', item);
@@ -37,14 +34,43 @@ export default {
       } else {
         this.showModal = !this.showModal;
       }
-    },
-    clearInput: function() {
-      this.newTodoItem = '';
     }
-  },
-  components: {
-    Modal: Modal
+
+    components: {
+     Modal: Modal
+    }
+    return { todoInput, addTodo, Modal}
   }
+
+
+    
+  }
+
+
+
+  // data: function() {
+  //   return {
+  //     newTodoItem: '',
+  //     showModal: false
+  //   }
+  // },
+  // methods: {
+  //   addTodo: function() {
+  //     if (this.newTodoItem !== '') {
+  //       var item = this.newTodoItem.trim();
+  //       this.$emit('addItem', item);
+  //       this.clearInput();
+  //     } else {
+  //       this.showModal = !this.showModal;
+  //     }
+  //   },
+  //   clearInput: function() {
+  //     this.newTodoItem = '';
+  //   }
+  // },
+  // components: {
+  //   Modal: Modal
+  // }
 }
 </script>
 
