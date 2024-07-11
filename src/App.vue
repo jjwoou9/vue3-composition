@@ -1,7 +1,7 @@
 <template>
   <TodoHeader></TodoHeader>
-  <TodoInput></TodoInput>
-  <TodoList :todoItems="todoItems"></TodoList>
+  <TodoInput @add="addTodoItem"></TodoInput>
+  <TodoList :todoItems="todoItems" @remove="removeTodoItem"></TodoList>
 </template>
 
 <script>
@@ -33,7 +33,18 @@ import TodoFooter from './components/TodoFooter.vue'
       }
       todoItems.value == fecthTodos;
 
-      return { todoItems }
+      function addTodoItem(todo){
+          todoItems.value.push(todo);
+          localStorage.setItem(todo, todo);
+      }
+
+      function removeTodoItem(item, index){
+        todoItems.splice(index, 1);
+        localStorage.removeItem(item,item);
+      }
+
+      function removeTodoItem(item, index){
+        return { todoItems, addTodoItem, }
     }   
   } 
 </script>

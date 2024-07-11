@@ -16,15 +16,16 @@
 import { ref } from 'vue';
 export default {
   props: ['todoItems'],
-  setup() {
+  setup(props, context) {
     const items = ref([]);
 
-    return { items };
+      function removeTodo(todoItem, index){
+        context.emit('remove', todoItem, index)
+      }
+
+    return { items, removeTodo };
   },
   methods: {
-    removeTodo: function(todoItem, index) {
-      this.$emit('removeItem', todoItem, index);
-    },
     toggleComplete: function(todoItem, index) {
       this.$emit('toggleItem', todoItem, index); 
     }

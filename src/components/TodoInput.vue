@@ -23,22 +23,25 @@ import { ref } from 'vue';
 import Modal from  './common/Modal.vue' 
 
 export default {
-  setup() {
+  components: {
+     Modal: Modal
+    },
+  setup(props, context) {
     const todoInput = ref('');
 
     function addTodo(){
       if (this.newTodoItem !== '') {
         var item = this.newTodoItem.trim();
-        this.$emit('addItem', item);
-        this.clearInput();
+        context.emit('add', item);
+        clearTodo();
       } else {
         this.showModal = !this.showModal;
-      }
+      }      
     }
 
-    components: {
-     Modal: Modal
-    }
+    const clearTodo = () => todoInput.value = '';    
+  
+
     return { todoInput, addTodo, Modal}
   }
 
